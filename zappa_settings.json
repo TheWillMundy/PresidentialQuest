@@ -1,8 +1,0 @@
-{
-    "dev": {
-        "project_name": "presidential_quest",
-        "s3_bucket": "presidential_quest_bucket",
-        "app_function": "app.app",
-        "slim_handler": "true"
-    }
-}
