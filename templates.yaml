@@ -9,7 +9,7 @@ introduction: |
 quest_step: |
   <speak>
   {{score_review}} <break time="0.25s" />
-  {{villain}} now approaches with their next challenge. They ask: <prosody rate="slow">{{random_fact}}</prosody>
+  {{villain}} now asks: <prosody rate="slow">{{random_fact}}</prosody>
   </speak>
 
 player_victory: |
