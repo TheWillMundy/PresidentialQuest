@@ -1,25 +1,30 @@
 introduction: |
   <speak>
-  It looks like {{villain}} is up to no good once again. <break time="0.5s" /> {{villain_backstory}} 
-  But thankfully, {{name}}, you're here to save the Union! <break time="0.25s" /> 
+  It looks like {{villain}} is up to no good once again. <break time="0.5s" /> {{villain_backstory}}
+  But thankfully, {{name}}, you're here to save the Union! <break time="0.25s" />
   {{villain}} has arranged several challenges for you - can you beat them? <break time="0.5s" />
   {{villain}} asks: <prosody rate="slow">{{random_fact}}</prosody>.
   </speak>
-  
+
 quest_step: |
   <speak>
   {{score_review}} <break time="0.25s" />
   {{villain}} now approaches with their next challenge. They ask: <prosody rate="slow">{{random_fact}}</prosody>
   </speak>
-  
+
 player_victory: |
   <speak>
-  Congratulations, you have saved the day from {{villain}}! The White House thanks you for 
+  Congratulations, you have saved the day from {{villain}}! The White House thanks you for
   everything you have done. Feel free to join us anytime!
   </speak>
-  
+
 villain_victory: |
   <speak>
   Oh no, it appears that {{villain}} has won this time... But don't worry {{name}}, you can beat them next time!
   See you again soon!
+  </speak>
+
+reprompt: |
+  <speak>
+  Just to remind you, {{villain}} asks: <prosody rate="slow">{{random_fact}}</prosody>
   </speak>

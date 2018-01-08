@@ -21,7 +21,7 @@ def get_challenge():
     all_facts = db_connect.get_facts(random_president)
     random_fact = random.choice(all_facts)
     return random_president, random_fact
-    
+
 def score_review(score, spoken_president, actual_president, villain):
     answer = "the answer was {}. ".format(actual_president)
     # Setting score
@@ -62,11 +62,11 @@ def homepage():
 # @app.route('/fact_form', methods=['GET'])
 # def fact_form():
 #     return render_template('form.html')
-# 
+#
 # @app.route('/add_fact', methods=['POST'])
 # def add():
 #     result = request.form
-#     db_connect.add_facts(result['president'], result['fact'])      
+#     db_connect.add_facts(result['president'], result['fact'])
 #     return redirect('/fact_form')
 
 @ask.launch
@@ -97,7 +97,9 @@ def presidential_intent(name):
     session.attributes['president'] = random_president
     print session
     message = render_template('introduction', villain=random_villain, villain_backstory=villain_backstory, name=name, random_fact=random_fact)
-    return question(message)
+    reprompt = render_template('reprompt', villain=random_villain, random_fact=random_fact)
+    return question(message) \
+            .reprompt(reprompt)
 
 @ask.intent("QuestStepIntent")
 def quest_step_intent(spoken_president):
@@ -121,7 +123,9 @@ def quest_step_intent(spoken_president):
     random_president, random_fact = get_challenge()
     session.attributes['president'] = random_president
     message = render_template('quest_step', villain=session.attributes['villain'], score_review=score_review_msg, random_fact=random_fact)
-    return question(message)
+    reprompt = render_template('reprompt', villain=session.attributes['villain'], random_fact=random_fact)
+    return question(message) \
+            .reprompt(reprompt)
 
 @ask.intent("AMAZON.HelpIntent")
 def help_intent():
