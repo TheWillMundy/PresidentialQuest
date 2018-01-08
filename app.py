@@ -16,7 +16,7 @@ app = Flask(__name__)
 ask = Ask(app, "/presidential_facts")
 
 # Helper variables
-stop_words = ['stop', 'cancel', 'end', 'finish']
+stop_words = ['stop', 'cancel', 'end', 'finish', 'no']
 
 # Helper Functions
 def get_challenge():
@@ -86,10 +86,10 @@ def start_skill():
 
 @ask.intent("PresidentialIntent", default={'name': 'Player'})
 def presidential_intent(name):
-    if 'name' in session.attributes:
-        name = session.attributes['name']
-    elif name.lower() in stop_words:
+    if name.lower() in stop_words:
         return stop_intent()
+    elif 'name' in session.attributes:
+        name = session.attributes['name']
     else:
         db_connect.add_user(session.user.userId, name)
         session.attributes['name'] = name
@@ -109,10 +109,10 @@ def presidential_intent(name):
 @ask.intent("QuestStepIntent")
 def quest_step_intent(spoken_president):
     # Ensures correct intent being executed
-    if 'president' not in session.attributes:
-        return presidential_intent('Player')
-    elif spoken_president.lower() in stop_words:
+    if spoken_president.lower() in stop_words:
         return stop_intent()
+    elif 'president' not in session.attributes:
+        return presidential_intent('Player')
     # match_spoken_president = process.extractOne(spoken_president, db_connect.get_presidents())
     actual_president = session.attributes['president']
     # Setup score
