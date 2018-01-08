@@ -6,6 +6,14 @@ introduction: |
   {{villain}} asks: <prosody rate="slow">{{random_fact}}</prosody>.
   </speak>
 
+welcome_introduction: |
+  <speak>
+  Welcome back, {{name}}! The White House is excited to see you again, because it looks like {{villain}}
+  is up to no good once again. <break time="0.5s" /> {{villain_backstory}} But thankfully, {{name}},
+  you're here to save the Union! <break time="0.25s" /> {{villain}} has arranged several challenges for you.
+  First, they ask: <prosody rate="slow">{{random_fact}}</prosody>.
+  </speak>
+
 quest_step: |
   <speak>
   {{score_review}} <break time="0.25s" />

@@ -81,15 +81,17 @@ def start_skill():
         message = "<speak>Hello! The White House is very pleased to meet you. What is your name?</speak>"
     else:
         session.attributes['name'] = name
-        message = "<speak>Welcome back, {}! The White House is excited to see you again. Do you wish to begin?</speak>".format(name)
+        return presidential_intent(name)
     return question(message)
 
 @ask.intent("PresidentialIntent", default={'name': 'Player'})
 def presidential_intent(name):
+    welcome_back = False
     if name.lower() in stop_words:
         return stop_intent()
     elif 'name' in session.attributes:
         name = session.attributes['name']
+        welcome_back = True
     else:
         db_connect.add_user(session.user.userId, name)
         session.attributes['name'] = name
@@ -101,7 +103,10 @@ def presidential_intent(name):
     random_president, random_fact = get_challenge()
     session.attributes['president'] = random_president
     print session
-    message = render_template('introduction', villain=random_villain, villain_backstory=villain_backstory, name=name, random_fact=random_fact)
+    if welcome_back:
+        message = render_template('welcome_introduction', villain=random_villain, villain_backstory=villain_backstory, name=name, random_fact=random_fact)
+    else:
+        message = render_template('introduction', villain=random_villain, villain_backstory=villain_backstory, name=name, random_fact=random_fact)
     reprompt = render_template('reprompt', villain=random_villain, random_fact=random_fact)
     return question(message) \
             .reprompt(reprompt)
