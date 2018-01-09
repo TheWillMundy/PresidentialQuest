@@ -2,7 +2,7 @@
 
 _Think you know our presidents? Think again._
 
-Picture this: your name is Thomas Jefferson, and you've just received word that Aaron Burr is
+Imagine this: your name is Thomas Jefferson, and you've just received word that Aaron Burr is
 planning to create a new country within your borders. What do you do? Do you sit back and watch as
 your former Vice-President takes your land? Or do you fight for your country by answering his Presidential
 Trivia?
