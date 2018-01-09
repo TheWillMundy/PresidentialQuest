@@ -122,7 +122,7 @@ def quest_step_intent(spoken_president):
 
 @ask.intent("AMAZON.HelpIntent")
 def help_intent():
-    help_text = '<speak></speak>'
+    help_text = render_template('help')
     return question(help_text)
 
 @ask.intent("AMAZON.CancelIntent")

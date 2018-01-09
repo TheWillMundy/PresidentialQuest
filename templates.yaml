@@ -29,3 +29,8 @@ reprompt: |
   <speak>
   Just to remind you, {{villain}} asks: <prosody rate="slow">{{random_fact}}</prosody>
   </speak>
+
+help: |
+  <speak>
+  Welcome to Presidential Quest! To begin, say 'launch presidential quest'. 
+  </speak>
