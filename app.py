@@ -50,11 +50,11 @@ def score_review(score, spoken_president, actual_president, villain):
             review_score_message += score_report + "oh no, {} is winning. You need to catch up!".format(villain)
     return score, review_score_message
 
-def limit_reached(score, villain, name):
+def limit_reached(score, villain, hero, president):
     if score['player'] >= 3:
-        return render_template('player_victory', villain=villain, name=name)
+        return render_template('player_victory', villain=villain, hero=hero)
     elif score['villain'] >= 3:
-        return render_template('villain_victory', villain=villain, name=name)
+        return render_template('villain_victory', villain=villain, hero=hero, president=president)
     else:
         return False
 
@@ -74,39 +74,24 @@ def homepage():
 
 @ask.launch
 def start_skill():
-    user_id = session['user']['userId']
-    # Search for user in DB
-    name = db_connect.check_user(user_id)
-    if name == "DNE":
-        message = "<speak>Hello! The White House is very pleased to meet you. What is your name?</speak>"
-    else:
-        session.attributes['name'] = name
-        return presidential_intent(name)
-    return question(message)
+    return presidential_intent()
 
-@ask.intent("PresidentialIntent", default={'name': 'Player'})
-def presidential_intent(name):
-    welcome_back = False
-    if name.lower() in stop_words:
-        return stop_intent()
-    elif 'name' in session.attributes:
-        name = session.attributes['name']
-        welcome_back = True
-    else:
-        db_connect.add_user(session.user.userId, name)
-        session.attributes['name'] = name
-    random_villain, villain_backstory = quest_helpers.random_villain()
+@ask.intent("BeginFromHelpIntent")
+def begin_from_help():
+    return presidential_intent()
+
+@ask.intent("PresidentialIntent")
+def presidential_intent():
+    random_villain, villain_backstory, villain_archenemy = quest_helpers.random_villain()
     # Setup Session
     session.attributes['villain'] = random_villain
     session.attributes['villain_backstory'] = villain_backstory
+    session.attributes['hero'] = villain_archenemy
     # Setup Challenge
     random_president, random_fact = get_challenge()
     session.attributes['president'] = random_president
-    print session
-    if welcome_back:
-        message = render_template('welcome_introduction', villain=random_villain, villain_backstory=villain_backstory, name=name, random_fact=random_fact)
-    else:
-        message = render_template('introduction', villain=random_villain, villain_backstory=villain_backstory, name=name, random_fact=random_fact)
+    # To be sent to user
+    message = render_template('introduction', villain=random_villain, villain_backstory=villain_backstory, hero=villain_archenemy, random_fact=random_fact)
     reprompt = render_template('reprompt', villain=random_villain, random_fact=random_fact)
     return question(message) \
             .reprompt(reprompt)
@@ -116,6 +101,8 @@ def quest_step_intent(spoken_president):
     # Ensures correct intent being executed
     if spoken_president.lower() in stop_words:
         return stop_intent()
+    elif spoken_president.lower().count("help") >= 1:
+        return help_intent()
     elif 'president' not in session.attributes:
         return presidential_intent('Player')
     # match_spoken_president = process.extractOne(spoken_president, db_connect.get_presidents())
@@ -126,7 +113,7 @@ def quest_step_intent(spoken_president):
         score = session.attributes['score']
     score, score_review_msg = score_review(score, spoken_president, actual_president, session.attributes['villain'])
     # Check score
-    message = limit_reached(score, session.attributes['villain'], session.attributes['name'])
+    message = limit_reached(score, session.attributes['villain'], session.attributes['hero'], actual_president)
     if message:
         return statement(message)
     else:
@@ -141,7 +128,7 @@ def quest_step_intent(spoken_president):
 
 @ask.intent("AMAZON.HelpIntent")
 def help_intent():
-    help_text = '<speak></speak>'
+    help_text = render_template('help')
     return question(help_text)
 
 @ask.intent("AMAZON.CancelIntent")

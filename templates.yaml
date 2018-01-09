@@ -1,17 +1,10 @@
 introduction: |
   <speak>
+  Welcome back to the Situation Room, Mr. {{hero}}. <break time="0.1s" />
   It looks like {{villain}} is up to no good once again. <break time="0.5s" /> {{villain_backstory}}
   But thankfully, {{name}}, you're here to save the Union! <break time="0.25s" />
   {{villain}} has arranged several challenges for you - can you beat them? <break time="0.5s" />
-  {{villain}} asks: <prosody rate="slow">{{random_fact}}</prosody>.
-  </speak>
-
-welcome_introduction: |
-  <speak>
-  Welcome back, {{name}}! The White House is excited to see you again, because it looks like {{villain}}
-  is up to no good once again. <break time="0.5s" /> {{villain_backstory}} But thankfully, {{name}},
-  you're here to save the Union! <break time="0.25s" /> {{villain}} has arranged several challenges for you.
-  First, they ask: <prosody rate="slow">{{random_fact}}</prosody>.
+  {{villain}} asks: <prosody rate="slow">{{random_fact}}</prosody>
   </speak>
 
 quest_step: |
@@ -22,17 +15,22 @@ quest_step: |
 
 player_victory: |
   <speak>
-  Congratulations, you have saved the day from {{villain}}! The White House thanks you for
-  everything you have done. Feel free to join us anytime!
+  Congratulations, you have saved the day from {{villain}}! America thanks you, Mr. {{hero}}, for
+  your heroic actions.
   </speak>
 
 villain_victory: |
   <speak>
-  Oh no, it appears that {{villain}} has won this time... But don't worry {{name}}, you can beat them next time!
-  See you again soon!
+  Oh no, the answer was {{president}}. It appears that {{villain}} has won this time...
+  But don't worry Mr. {{hero}}, you can beat them next time! See you again soon!
   </speak>
 
 reprompt: |
   <speak>
   Just to remind you, {{villain}} asks: <prosody rate="slow">{{random_fact}}</prosody>
+  </speak>
+
+help: |
+  <speak>
+  Welcome to Presidential Quest! To begin, say 'start quest'. 
   </speak>

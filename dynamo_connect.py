@@ -43,7 +43,7 @@ def get_villains():
     for vil_obj in table_data['Items']:
         villain = vil_obj['Villain']
         if villain not in all_villains.keys():
-            all_villains[villain] = vil_obj['Backstories'][0]
+            all_villains[villain] = (vil_obj['Backstories'][0], vil_obj['ArchEnemy'])
     return all_villains
 
 # User Methods
@@ -67,4 +67,3 @@ def add_user(user_id, name):
         response = users.put_item(Item=new_user)
         # print dynamodb.get_item(Table="Users", Key=user_id)
         return "User successfully added!"
-  
