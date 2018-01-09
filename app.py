@@ -50,11 +50,11 @@ def score_review(score, spoken_president, actual_president, villain):
             review_score_message += score_report + "oh no, {} is winning. You need to catch up!".format(villain)
     return score, review_score_message
 
-def limit_reached(score, villain, hero):
+def limit_reached(score, villain, hero, president):
     if score['player'] >= 3:
         return render_template('player_victory', villain=villain, hero=hero)
     elif score['villain'] >= 3:
-        return render_template('villain_victory', villain=villain, hero=hero)
+        return render_template('villain_victory', villain=villain, hero=hero, president=president)
     else:
         return False
 
@@ -107,7 +107,7 @@ def quest_step_intent(spoken_president):
         score = session.attributes['score']
     score, score_review_msg = score_review(score, spoken_president, actual_president, session.attributes['villain'])
     # Check score
-    message = limit_reached(score, session.attributes['villain'], session.attributes['hero'])
+    message = limit_reached(score, session.attributes['villain'], session.attributes['hero'], actual_president)
     if message:
         return statement(message)
     else:
