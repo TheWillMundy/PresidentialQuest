@@ -76,6 +76,10 @@ def homepage():
 def start_skill():
     return presidential_intent()
 
+@ask.intent("BeginFromHelpIntent")
+def begin_from_help():
+    return presidential_intent()
+
 @ask.intent("PresidentialIntent")
 def presidential_intent():
     random_villain, villain_backstory, villain_archenemy = quest_helpers.random_villain()
@@ -97,6 +101,8 @@ def quest_step_intent(spoken_president):
     # Ensures correct intent being executed
     if spoken_president.lower() in stop_words:
         return stop_intent()
+    elif spoken_president.lower().count("help") >= 1:
+        return help_intent()
     elif 'president' not in session.attributes:
         return presidential_intent('Player')
     # match_spoken_president = process.extractOne(spoken_president, db_connect.get_presidents())
