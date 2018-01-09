@@ -15,7 +15,8 @@ def random_villain():
     all_villains = db_connect.get_villains()
     if len(all_villains.keys()) > 0:
         chosen_villain = random.choice(all_villains.keys())
-        villain_backstory = all_villains[chosen_villain]
-        return chosen_villain, villain_backstory
+        villain_backstory = all_villains[chosen_villain][0]
+        villain_archenemy = all_villains[chosen_villain][1]
+        return chosen_villain, villain_backstory, villain_archenemy
     else:
-        return "", ""
+        return "", "", ""
