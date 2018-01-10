@@ -14,3 +14,12 @@ a fun game setting. All information contained in the game is factually accurate,
 discussion-starters at the dinner table.
 
 **_So what are you waiting for? Go save the Union!_**
+
+[This project is currently deployed and certified on Amazon](https://www.amazon.com/gp/product/B078WNLVJR?ie=UTF8&ref-suffix=ss_rw)  
+
+## Additional Information  
+To setup:
+1. Create a new virtual environment in the directory
+2. Use ```python pip -r requirements.txt ``` to install dependencies
+3. Install [Zappa](https://github.com/Miserlou/Zappa) and setup with your AWS Credentials
+4. Deploy with Zappa
